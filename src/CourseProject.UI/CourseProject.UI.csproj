@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+    <PackageReference Include="Prism.Unity" Version="8.1.97" />
+    <PackageReference Include="Telerik.UI.for.Wpf.50.Trial" Version="2021.3.1109" />
+    <PackageReference Include="Telerik.Windows.Cloud.for.Wpf.Trial" Version="2021.3.1109" />
+    <PackageReference Include="Telerik.Windows.Controls.Navigation.for.Wpf.Trial" Version="2021.3.1109" />
+    <PackageReference Include="Telerik.Windows.Data.for.Wpf.Trial" Version="2021.3.1109" />
+    <PackageReference Include="Telerik.Windows.Themes.Windows8.for.Wpf.Trial" Version="2021.3.1109" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CourseProject.Application\CourseProject.Application.csproj" />
+    <ProjectReference Include="..\CourseProject.Database\CourseProject.Database.csproj" />
+    <ProjectReference Include="..\CourseProject.Domain\CourseProject.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Styles\" />
+    <Folder Include="Images\" />
+  </ItemGroup>
+
+</Project>

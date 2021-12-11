@@ -1,0 +1,242 @@
+﻿<UserControl x:Class="CourseProject.UI.Pages.ServiceControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="GroupBoxStyleWithoutHeder" TargetType="{x:Type GroupBox}">
+            <Setter Property="BorderBrush" Value="#D5DFE5" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupBox}">
+                        <Grid SnapsToDevicePixels="true">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="6" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="6" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="6" />
+                            </Grid.RowDefinitions>
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="Transparent"
+                                    CornerRadius="4" Grid.ColumnSpan="4" Grid.Column="0" Grid.RowSpan="3" Grid.Row="1" />
+                            <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="White"
+                                    CornerRadius="4" Grid.ColumnSpan="4" Grid.RowSpan="3" Grid.Row="1">
+                                <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                        BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3">
+                                    <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="White"
+                                            CornerRadius="2" />
+                                </Border>
+                            </Border>
+                            <Border x:Name="Header" Grid.Column="1" Padding="3,1,3,0" Grid.RowSpan="2" Grid.Row="0">
+                                <ContentPresenter ContentSource="Header" RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Border>
+                            <ContentPresenter Grid.ColumnSpan="2" Grid.Column="1" Margin="{TemplateBinding Padding}"
+                                              Grid.Row="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="75" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Column="0" Grid.Row="0"
+                  Grid.RowSpan="2" Grid.ColumnSpan="2"
+                  MaxHeight="150" MaxWidth="150"
+                  Foreground="#DEE2EC" Background="#085900"
+                  BorderBrush="#DEE2EC"
+                  Style="{DynamicResource GroupBoxStyleWithoutHeder}">
+            <GroupBox.BorderThickness>
+                0
+            </GroupBox.BorderThickness>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Spotify" FontSize="25"
+                           Foreground="#62C458" FontFamily="Georgia"
+                           Grid.ColumnSpan="5" TextAlignment="Center"
+                           Grid.Row="4" />
+                <Image Grid.ColumnSpan="5" Grid.RowSpan="4" Width="100" Source="C:\Spoti.png" />
+                <Button Grid.ColumnSpan="5" Grid.RowSpan="5"
+                        MinHeight="125" MinWidth="125" Background="#085900" BorderBrush="#085900"
+                        Command="{Binding GoToSpotifyControl}" Opacity="0"
+                        Width="90" Height="30" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="4" Grid.Row="3"
+                  Grid.RowSpan="2"
+                  MaxHeight="150" MaxWidth="150"
+                  Foreground="#DEE2EC" Background="#6C4900"
+                  BorderBrush="#DEE2EC"
+                  Style="{DynamicResource GroupBoxStyleWithoutHeder}">
+            <GroupBox.BorderThickness>
+                0
+            </GroupBox.BorderThickness>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Apple Music" FontSize="25"
+                           Foreground="#A67100" FontFamily="Georgia"
+                           Grid.ColumnSpan="5" TextAlignment="Center"
+                           Grid.Row="4" />
+                <Image Grid.ColumnSpan="5" Grid.RowSpan="4" Width="100" Source="C:\AppleM.png" />
+                <Button Grid.ColumnSpan="5" Grid.RowSpan="5"
+                        MinHeight="125" MinWidth="125" Background="#085900" BorderBrush="#085900"
+                        Command="{Binding GoToAppleMusicControl}" Opacity="0"
+                        Width="90" Height="30" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.Row="3"
+                  Grid.RowSpan="2" Grid.ColumnSpan="2"
+                  MaxHeight="150" MaxWidth="150"
+                  Foreground="#DEE2EC" Background="#6C4900"
+                  BorderBrush="#DEE2EC"
+                  Style="{DynamicResource GroupBoxStyleWithoutHeder}">
+            <GroupBox.BorderThickness>
+                0
+            </GroupBox.BorderThickness>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Yandex Music" FontSize="20"
+                           Foreground="#A67100" FontFamily="Georgia"
+                           Grid.ColumnSpan="5" TextAlignment="Center"
+                           Grid.Row="4" />
+                <Image Grid.ColumnSpan="5" Grid.RowSpan="4" Width="100" Source="C:\Yandex.png" />
+                <Button Grid.ColumnSpan="5" Grid.RowSpan="5"
+                        MinHeight="125" MinWidth="125" Background="#085900" BorderBrush="#085900"
+                        Command="{Binding GoToYandexMusicControl}" Opacity="0"
+                        Width="90" Height="30" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="0" Grid.Row="3"
+                  Grid.RowSpan="2"
+                  MaxHeight="150" MaxWidth="150"
+                  Foreground="#DEE2EC" Background="#6C4900"
+                  BorderBrush="#DEE2EC"
+                  Style="{DynamicResource GroupBoxStyleWithoutHeder}">
+            <GroupBox.BorderThickness>
+                0
+            </GroupBox.BorderThickness>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Text="Google Play" FontSize="25"
+                           Foreground="#A67100" FontFamily="Georgia"
+                           Grid.ColumnSpan="5" TextAlignment="Center"
+                           Grid.Row="4" />
+                <Image Grid.ColumnSpan="5" Grid.RowSpan="4" Width="75" Source="C:\Google.png" />
+                <Button Grid.ColumnSpan="5" Grid.RowSpan="5"
+                        MinHeight="125" MinWidth="125" Background="#085900" BorderBrush="#085900"
+                        Command="{Binding GoToGoogleMusicControl}" Opacity="0"
+                        Width="90" Height="30" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="2" Grid.Row="0"
+                  Grid.RowSpan="2" Grid.ColumnSpan="2"
+                  MaxHeight="150" MaxWidth="150"
+                  Foreground="#DEE2EC" Background="#A60000"
+                  BorderBrush="#DEE2EC"
+                  Style="{DynamicResource GroupBoxStyleWithoutHeder}">
+            <GroupBox.BorderThickness>
+                0
+            </GroupBox.BorderThickness>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Text="YouTube Music" FontSize="20"
+                           Foreground="#FF7373" FontFamily="Georgia"
+                           Grid.ColumnSpan="5" TextAlignment="Center"
+                           Grid.Row="4" />
+                <Image Grid.ColumnSpan="5" Grid.RowSpan="4" Width="100" Source="C:\YouTube.png" />
+                <Button Grid.ColumnSpan="5" Grid.RowSpan="5" Opacity="0"
+                        MinHeight="125" MinWidth="125" Background="#085900" BorderBrush="#085900"
+                        Command="{Binding GoToYouTubeMusicControl}"
+                        Width="90" Height="30" />
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

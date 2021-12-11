@@ -1,0 +1,99 @@
+﻿<Window x:Class="CourseProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="#062270">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <GroupBox Header="User Form" Grid.RowSpan="4" Grid.ColumnSpan="4" FontSize="50" Foreground="#DEE2EC"
+                  FontFamily="Georgia">
+            <GroupBox.BorderBrush>
+                #062270
+            </GroupBox.BorderBrush>
+            <GroupBox.BorderThickness>
+                2
+            </GroupBox.BorderThickness>
+        </GroupBox>
+        <ContentControl Content="{Binding UserPageViewModel}" Grid.RowSpan="4" Grid.ColumnSpan="4" />
+        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <telerik:RadTreeView Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="4" Margin="10,-30,-10,0">
+                <telerik:RadTreeViewItem Header="Services" Background="#9155B7" Command="{Binding NavigateToServiceCommand}">
+                    <telerik:RadTreeViewItem Header="Spotify" Background="#9155B7" SelectedImageSrc="C:\Spoti.png">
+                        <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
+                    </telerik:RadTreeViewItem>
+                    <telerik:RadTreeViewItem Header="Apple Music" Background="#9155B7" SelectedImageSrc="C:\AppleM.png">
+                        <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
+                    </telerik:RadTreeViewItem>
+                    <telerik:RadTreeViewItem Header="Google Play Music" Background="#9155B7"
+                                             SelectedImageSrc="C:\Google.png">
+                        <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
+                    </telerik:RadTreeViewItem>
+                    <telerik:RadTreeViewItem Header="Yandex Music" Background="#9155B7"
+                                             SelectedImageSrc="C:\Yandex.png">
+                        <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
+                    </telerik:RadTreeViewItem>
+                    <telerik:RadTreeViewItem Header="YouTube Music" Background="#9155B7"
+                                             SelectedImageSrc="C:\YouTube.png">
+                        <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
+                        <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
+                    </telerik:RadTreeViewItem>
+                </telerik:RadTreeViewItem>
+            </telerik:RadTreeView>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <ContentControl Content="{Binding CurrentPageViewModel}" Grid.Row="1" Grid.RowSpan="5" Grid.ColumnSpan="4" />
+        </Grid>
+    </Grid>
+</Window>
