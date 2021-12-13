@@ -1,6 +1,7 @@
 ﻿#region Using derectives
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CourseProject.Database;
 using CourseProject.Domain.Entity;
@@ -18,6 +19,9 @@ namespace CourseProject.Application.EntityService
         private readonly ApplicationContext _context;
 
         public SponsorService(ApplicationContext context) => _context = context;
+
+        public async Task<IEnumerable<Sponsor>> NameFilt() =>
+                await _context.Sponsors.OrderBy(x=>x.SponsorName).ToListAsync();
 
         public async Task<bool> AddAsync(Sponsor artist)
         {

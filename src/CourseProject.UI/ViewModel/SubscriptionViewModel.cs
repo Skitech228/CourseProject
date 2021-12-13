@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using CourseProject.Application.AsyncConmands;
 using CourseProject.Domain.Entity;
 using CourseProject.Shared.IEntityService;
@@ -26,14 +28,25 @@ namespace CourseProject.UI.ViewModel
         private AsyncRelayCommand _applySubscriptionChangesRelayCommand;
         private DelegateCommand _changeEditModeCommand;
         private AsyncRelayCommand _reloadSubscriptionsRelayCommand;
+        private DelegateCommand _buySubCommand;
+        private string _selectService;
+        private DelegateCommand _subscriptionNameFiltCommand;
 
         public SubscriptionViewModel(ISubscriptionService salesService)
         {
             _subscriptionService = salesService;
             Subscriptions = new ObservableCollection<SubscriptionEntity>();
+            Dispatcher.CurrentDispatcher.InvokeAsync(async () => await ReloadSubscriptionsAsync());
+            //ReloadSubscriptionsAsync()
+            //        .Wait();
+        }
 
-            ReloadSubscriptionsAsync()
-                    .Wait();
+        public DelegateCommand BuySub =>
+                _buySubCommand ??= new DelegateCommand(OnBuySubCommandExecuted);
+
+        private void OnBuySubCommandExecuted()
+        {
+            Process.Start(new ProcessStartInfo("cmd", $"/c start https://{SelectedSubscription.Entity.Link}"));
         }
 
         public DelegateCommand AddSubscriptionCommand =>
@@ -54,6 +67,18 @@ namespace CourseProject.UI.ViewModel
         public AsyncRelayCommand ReloadSubscriptionsRelayCommand =>
                 _reloadSubscriptionsRelayCommand ??= new AsyncRelayCommand(ReloadSubscriptionsAsync);
 
+        public DelegateCommand SubscriptionNameFilt => _subscriptionNameFiltCommand ??= new DelegateCommand(OnSubscriptionNameFilt);
+
+        private async void OnSubscriptionNameFilt()
+        {
+            var dbSales = await _subscriptionService.CostFilt();
+            Subscriptions.Clear();
+
+            foreach (var sale in dbSales)
+                Subscriptions.Add(new SubscriptionEntity(sale));
+
+        }
+
         public ObservableCollection<SubscriptionEntity> Subscriptions
         {
             get => _subscriptions;
@@ -65,6 +90,11 @@ namespace CourseProject.UI.ViewModel
             get => _isEditMode;
             set => Set(ref _isEditMode, value);
         }
+        public string SelectService
+        {
+            get => _selectService;
+            set => Set(ref _selectService, value);
+        } 
 
         public SubscriptionEntity SelectedSubscription
         {
@@ -104,9 +134,9 @@ namespace CourseProject.UI.ViewModel
         private async Task OnApplySubscriptionChangesCommandExecuted()
         {
             if (SelectedSubscription.Entity.ServiceId == 0)
-                await _subscriptionService.AddAsync(SelectedSubscription.Entity);
+                await _subscriptionService.AddAsync(SelectedSubscription.Entity, SelectService);
             else
-                await _subscriptionService.UpdateAsync(SelectedSubscription.Entity);
+                await _subscriptionService.UpdateAsync(SelectedSubscription.Entity, SelectService);
 
             await ReloadSubscriptionsAsync();
         }

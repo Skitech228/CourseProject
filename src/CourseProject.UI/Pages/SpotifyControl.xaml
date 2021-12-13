@@ -52,8 +52,8 @@
             </GroupBox.BorderThickness>
         </GroupBox>
         <Button
-            Content="Go to Genrs"
-            Command="{Binding GoToServiceControl}"
+            Content="Go to Genres"
+            Command="{Binding GoToSpotifyGenres}"
             Width="150" Height="50" Foreground="White"
             Background="DarkGreen"
             Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
@@ -70,7 +70,7 @@
         </GroupBox>
         <Button
             Content="Go to Sponsors"
-            Command="{Binding GoToServiceControl}"
+            Command="{Binding GoToSpotifySponsors}"
             Width="150" Height="50" Foreground="White"
             Background="DarkGreen"
             Grid.Row="3" Grid.Column="0"
@@ -87,7 +87,7 @@
         </GroupBox>
         <Button
             Content="Go to Subscriptions"
-            Command="{Binding GoToServiceControl}"
+            Command="{Binding GoToSpotifySubscriptions}"
             Width="150" Height="50" Foreground="White"
             Background="DarkGreen"
             Grid.Row="3" Grid.Column="4"

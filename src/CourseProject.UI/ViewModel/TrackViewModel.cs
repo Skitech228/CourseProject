@@ -3,7 +3,11 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Media;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Threading;
 using CourseProject.Application.AsyncConmands;
 using CourseProject.Domain.Entity;
 using CourseProject.Shared.IEntityService;
@@ -26,16 +30,61 @@ namespace CourseProject.UI.ViewModel
         private AsyncRelayCommand _applyTrackChangesRelayCommand;
         private DelegateCommand _changeEditModeCommand;
         private AsyncRelayCommand _reloadTracksRelayCommand;
+        private DelegateCommand _playOrOffMusic;
+        private bool _isMusicPlay;
+        private string _behavior;
+        private string _selectedGenre;
+        private string _selectedArtist;
+        private DelegateCommand _genreNameFiltCommand;
 
         public TrackViewModel(ITrackService salesService)
         {
             _trackService = salesService;
             Tracks = new ObservableCollection<TrackEntity>();
+            Dispatcher.CurrentDispatcher.InvokeAsync(async () => await ReloadTracksAsync());
+            Behavior = "Stop";
 
-            ReloadTracksAsync()
-                    .Wait();
+            //ReloadTracksAsync()
+            //        .Wait();
         }
 
+        #region Music
+
+     
+        public DelegateCommand PlayOrOffMusic => _playOrOffMusic ??= new DelegateCommand(OnPlayOrOffMusic);
+
+        private void OnPlayOrOffMusic()
+        {
+            if (IsMusicPlay)
+            {
+                IsMusicPlay = false;
+                Behavior = "Pause";
+            }
+            else
+            {
+                if(SelectedTrack!=null)
+                if(SelectedTrack.Entity.Path!="")
+                {
+                    IsMusicPlay = true;
+                    Behavior = "Play";
+                }
+            }
+        }
+
+        public bool IsMusicPlay
+        {
+            get => _isMusicPlay;
+            set => Set(ref _isMusicPlay, value);
+        }
+
+
+        public string Behavior
+        {
+            get => _behavior;
+            set => Set(ref _behavior, value);
+        }
+
+        #endregion
         public DelegateCommand AddTrackCommand => _addTrackCommand ??= new DelegateCommand(OnAddTrackCommandExecuted);
 
         public AsyncRelayCommand RemoveTrackRelayCommand =>
@@ -52,6 +101,17 @@ namespace CourseProject.UI.ViewModel
         public AsyncRelayCommand ReloadTracksRelayCommand =>
                 _reloadTracksRelayCommand ??= new AsyncRelayCommand(ReloadTracksAsync);
 
+        public DelegateCommand GenreNameFilt => _genreNameFiltCommand ??= new DelegateCommand(OnGenreNameFilt);
+
+        private async void OnGenreNameFilt()
+        {
+            var dbSales = await _trackService.NameFilt(SelectedTrack.Entity.Genre.GenreName);
+            Tracks.Clear();
+
+            foreach (var sale in dbSales)
+                Tracks.Add(new TrackEntity(sale));
+        }
+
         public ObservableCollection<TrackEntity> Tracks
         {
             get => _tracks;
@@ -62,6 +122,18 @@ namespace CourseProject.UI.ViewModel
         {
             get => _isEditMode;
             set => Set(ref _isEditMode, value);
+        }
+
+        public string SelectedGenre
+        {
+            get => _selectedGenre;
+            set => Set(ref _selectedGenre, value);
+        }
+
+        public string SelectedArtist
+        {
+            get => _selectedArtist;
+            set => Set(ref _selectedArtist, value);
         }
 
         public TrackEntity SelectedTrack
@@ -79,12 +151,12 @@ namespace CourseProject.UI.ViewModel
             Tracks.Insert(0,
                           new TrackEntity(new Track
                                           {
-                                                  TrackName = String.Empty,
+                                                  TrackName = "String.Empty",
                                                   Cost = 0,
                                                   DurationInSeconds = 0,
                                                   GenreId = 0,
                                                   ArtistId = 0,
-                                                  Path = String.Empty
+                                                  Path = @"C:/Enemy.mp3"
                                           }));
 
             SelectedTrack = Tracks.First();
@@ -103,9 +175,9 @@ namespace CourseProject.UI.ViewModel
         private async Task OnApplyTrackChangesCommandExecuted()
         {
             if (SelectedTrack.Entity.TrackId == 0)
-                await _trackService.AddAsync(SelectedTrack.Entity);
+                await _trackService.AddAsync(SelectedTrack.Entity, SelectedArtist, SelectedGenre);
             else
-                await _trackService.UpdateAsync(SelectedTrack.Entity);
+                await _trackService.UpdateAsync(SelectedTrack.Entity, SelectedArtist, SelectedGenre);
 
             await ReloadTracksAsync();
         }

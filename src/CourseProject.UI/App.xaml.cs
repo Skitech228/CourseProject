@@ -36,9 +36,11 @@ namespace CourseProject
             containerRegistry.RegisterScoped<ISubscriptionService, SubscriptionService>();
             containerRegistry.RegisterScoped<ITrackService, TrackService>();
             containerRegistry.RegisterForNavigation<MainWindow, MainWindowViewModel>("AdministratorPage");
+
         }
 
         /// <inheritdoc />
+        /// 
         protected override Window CreateShell() => Container.Resolve<MainWindow>();
 
         #endregion

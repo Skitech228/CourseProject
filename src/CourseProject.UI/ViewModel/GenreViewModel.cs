@@ -1,9 +1,12 @@
 ﻿#region Using derectives
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Threading;
 using CourseProject.Application.AsyncConmands;
 using CourseProject.Domain.Entity;
 using CourseProject.Shared.IEntityService;
@@ -26,17 +29,39 @@ namespace CourseProject.UI.ViewModel
         private AsyncRelayCommand _applyGenreChangesRelayCommand;
         private DelegateCommand _changeEditModeCommand;
         private AsyncRelayCommand _reloadGenresRelayCommand;
+        private List<string> _existingGenres;
+        private DelegateCommand _genreNameFiltCommand;
 
         public GenreViewModel(IGenreService salesService)
         {
             _genreService = salesService;
             Genres = new ObservableCollection<GenreEntity>();
-
-            ReloadGenresAsync()
-                    .Wait();
+            ExistingGenres = new List<string>();
+            Dispatcher.CurrentDispatcher.InvokeAsync(async () => await ReloadGenresAsync());
+            OnGetExistedGenres();
+            //ReloadGenresAsync()
+            //        .Wait();
         }
 
+        public List<string> ExistingGenres
+        {
+            get => _existingGenres;
+            set => Set(ref _existingGenres, value);
+        }
         public DelegateCommand AddGenreCommand => _addGenreCommand ??= new DelegateCommand(OnAddGenreCommandExecuted);
+
+        public DelegateCommand GenreNameFilt => _genreNameFiltCommand ??= new DelegateCommand(OnGenreNameFilt);
+
+        private async void OnGenreNameFilt()
+        {
+            var dbSales = await _genreService.NameFilt(SelectedGenre.Entity.GenreName);
+            Genres.Clear();
+
+            foreach (var sale in dbSales)
+                Genres.Add(new GenreEntity(sale));
+
+            await OnGetExistedGenres();
+        }
 
         public AsyncRelayCommand RemoveGenreRelayCommand =>
                 _removeGenreRelayCommand ??= new AsyncRelayCommand(OnRemoveGenreCommandExecuted);
@@ -106,6 +131,15 @@ namespace CourseProject.UI.ViewModel
             await ReloadGenresAsync();
         }
 
+        private async Task OnGetExistedGenres()
+        {
+            var dbSeles = await _genreService.GetExistedGenresAsync();
+            ExistingGenres.Clear();
+
+            foreach (var sale in dbSeles)
+                ExistingGenres.Add(sale);
+        }
+
         private async Task ReloadGenresAsync()
         {
             var dbSales = await _genreService.GetAllAsync();
@@ -113,6 +147,9 @@ namespace CourseProject.UI.ViewModel
 
             foreach (var sale in dbSales)
                 Genres.Add(new GenreEntity(sale));
+
+            await OnGetExistedGenres();
+
         }
     }
 }

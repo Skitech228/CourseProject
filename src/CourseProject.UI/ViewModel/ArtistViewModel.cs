@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using CourseProject.Application.AsyncConmands;
 using CourseProject.Domain.Entity;
 using CourseProject.Shared.IEntityService;
@@ -31,9 +32,7 @@ namespace CourseProject.UI.ViewModel
         {
             _artistService = artistService;
             Artists = new ObservableCollection<ArtistEntity>();
-
-            ReloadArtistsAsync()
-                    .Wait();
+            Dispatcher.CurrentDispatcher.InvokeAsync(async () => await ReloadArtistsAsync());
         }
 
         public DelegateCommand AddArtistCommand =>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using CourseProject.Application.AsyncConmands;
 using CourseProject.Domain.Entity;
 using CourseProject.Shared.IEntityService;
@@ -26,14 +27,15 @@ namespace CourseProject.UI.ViewModel
         private AsyncRelayCommand _applySponsorChangesRelayCommand;
         private DelegateCommand _changeEditModeCommand;
         private AsyncRelayCommand _reloadSponsorsRelayCommand;
+        private DelegateCommand _sponsorNameFiltCommand;
 
         public SponsorViewModel(ISponsorService salesService)
         {
             _sponsorService = salesService;
             Sponsors = new ObservableCollection<SponsorEntity>();
-
-            ReloadSponsorsAsync()
-                    .Wait();
+            Dispatcher.CurrentDispatcher.InvokeAsync(async () => await ReloadSponsorsAsync());
+            //ReloadSponsorsAsync()
+            //        .Wait();
         }
 
         public DelegateCommand AddSponsorCommand =>
@@ -52,6 +54,18 @@ namespace CourseProject.UI.ViewModel
 
         public AsyncRelayCommand ReloadSponsorsRelayCommand =>
                 _reloadSponsorsRelayCommand ??= new AsyncRelayCommand(ReloadSponsorsAsync);
+
+        public DelegateCommand SponsorNameFilt => _sponsorNameFiltCommand ??= new DelegateCommand(OnSponsorNameFilt);
+
+        private async void OnSponsorNameFilt()
+        {
+            var dbSales = await _sponsorService.NameFilt();
+            Sponsors.Clear();
+
+            foreach (var sale in dbSales)
+                Sponsors.Add(new SponsorEntity(sale));
+
+        }
 
         public ObservableCollection<SponsorEntity> Sponsors
         {

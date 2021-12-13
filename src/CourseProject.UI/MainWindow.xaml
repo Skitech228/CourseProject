@@ -29,7 +29,6 @@
                 2
             </GroupBox.BorderThickness>
         </GroupBox>
-        <ContentControl Content="{Binding UserPageViewModel}" Grid.RowSpan="4" Grid.ColumnSpan="4" />
         <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -47,30 +46,36 @@
             </Grid.RowDefinitions>
             <telerik:RadTreeView Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="4" Margin="10,-30,-10,0">
                 <telerik:RadTreeViewItem Header="Services" Background="#9155B7" Command="{Binding NavigateToServiceCommand}">
-                    <telerik:RadTreeViewItem Header="Spotify" Background="#9155B7" SelectedImageSrc="C:\Spoti.png">
-                        <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
-                        <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
-                        <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
+                    <telerik:RadTreeViewItem Header="Spotify" Background="#9155B7" SelectedImageSrc="C:\Spoti.png" Command="{Binding NavigateToSpotifyControlCommand}">
+                        <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" Command="{Binding NavigateToSpotifySponsorsCommand}"/>
+                        <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7"
+                                                 Command="{Binding NavigateToSpotifySubscriptionsCommand}" />
+                        <telerik:RadTreeViewItem Header="Genres" Background="#9155B7"
+                                                 Command="{Binding NavigateToSpotifyGenresCommand}" />
                     </telerik:RadTreeViewItem>
-                    <telerik:RadTreeViewItem Header="Apple Music" Background="#9155B7" SelectedImageSrc="C:\AppleM.png">
+                    <telerik:RadTreeViewItem Header="Apple Music" Background="#9155B7" SelectedImageSrc="C:\AppleM.png"
+                                             Command="{Binding NavigateToAppleControlCommand}">
                         <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
                         <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
                         <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
                     </telerik:RadTreeViewItem>
                     <telerik:RadTreeViewItem Header="Google Play Music" Background="#9155B7"
-                                             SelectedImageSrc="C:\Google.png">
+                                             SelectedImageSrc="C:\Google.png"
+                                             Command="{Binding NavigateToGoogleControlCommand}">
                         <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
                         <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
                         <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
                     </telerik:RadTreeViewItem>
                     <telerik:RadTreeViewItem Header="Yandex Music" Background="#9155B7"
-                                             SelectedImageSrc="C:\Yandex.png">
+                                             SelectedImageSrc="C:\Yandex.png"
+                                             Command="{Binding NavigateToYandexControlCommand}">
                         <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
                         <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
                         <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
                     </telerik:RadTreeViewItem>
                     <telerik:RadTreeViewItem Header="YouTube Music" Background="#9155B7"
-                                             SelectedImageSrc="C:\YouTube.png">
+                                             SelectedImageSrc="C:\YouTube.png"
+                                             Command="{Binding NavigateToYouTubeControlCommand}">
                         <telerik:RadTreeViewItem Header="Sponsors" Background="#9155B7" />
                         <telerik:RadTreeViewItem Header="Subscriptions" Background="#9155B7" />
                         <telerik:RadTreeViewItem Header="Genres" Background="#9155B7" />
@@ -95,5 +100,7 @@
             </Grid.RowDefinitions>
             <ContentControl Content="{Binding CurrentPageViewModel}" Grid.Row="1" Grid.RowSpan="5" Grid.ColumnSpan="4" />
         </Grid>
+        <Button Height="50" Width="250" Margin="0,0,30,100" Opacity="0" Command="{Binding NavigateToAdminCommand}"/>
+        <ContentControl Content="{Binding AdminPageViewModel}" Grid.RowSpan="4" Grid.ColumnSpan="4" />
     </Grid>
 </Window>

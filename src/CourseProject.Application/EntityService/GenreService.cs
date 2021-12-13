@@ -1,6 +1,7 @@
 ﻿#region Using derectives
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CourseProject.Database;
 using CourseProject.Domain.Entity;
@@ -48,6 +49,10 @@ namespace CourseProject.Application.EntityService
 
         /// <inheritdoc />
         public async Task<IEnumerable<Genre>> GetAllAsync() => await _context.Genres.ToListAsync();
+
+        public async Task<IEnumerable<Genre>> NameFilt(string name) => await _context.Genres.Where(x=>x.GenreName==name).ToListAsync();
+
+        public async Task<IEnumerable<string>> GetExistedGenresAsync() => await _context.Genres.Select(x=>x.GenreName).ToListAsync();
 
         #endregion
     }

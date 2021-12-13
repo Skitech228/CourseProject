@@ -14,7 +14,6 @@ namespace CourseProject.Database
 
         public ApplicationContext()
         {
-            Database.EnsureCreated();
         }
 
         public DbSet<Artist> Artists { get; set; }

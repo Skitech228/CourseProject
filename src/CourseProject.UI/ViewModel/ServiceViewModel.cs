@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using CourseProject.Application.AsyncConmands;
 using CourseProject.Domain.Entity;
 using CourseProject.Shared.IEntityService;
@@ -31,9 +32,9 @@ namespace CourseProject.UI.ViewModel
         {
             _serviceService = salesServiceService;
             Services = new ObservableCollection<ServiceEntity>();
-
-            ReloadServicesAsync()
-                    .Wait();
+            Dispatcher.CurrentDispatcher.InvokeAsync(async () => await ReloadServicesAsync());
+            //ReloadServicesAsync()
+            //        .Wait();
         }
 
         public DelegateCommand AddServiceCommand =>
