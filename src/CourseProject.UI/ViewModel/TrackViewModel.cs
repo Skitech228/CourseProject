@@ -1,12 +1,8 @@
 ﻿#region Using derectives
 
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Media;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Threading;
 using CourseProject.Application.AsyncConmands;
 using CourseProject.Domain.Entity;
@@ -48,43 +44,6 @@ namespace CourseProject.UI.ViewModel
             //        .Wait();
         }
 
-        #region Music
-
-     
-        public DelegateCommand PlayOrOffMusic => _playOrOffMusic ??= new DelegateCommand(OnPlayOrOffMusic);
-
-        private void OnPlayOrOffMusic()
-        {
-            if (IsMusicPlay)
-            {
-                IsMusicPlay = false;
-                Behavior = "Pause";
-            }
-            else
-            {
-                if(SelectedTrack!=null)
-                if(SelectedTrack.Entity.Path!="")
-                {
-                    IsMusicPlay = true;
-                    Behavior = "Play";
-                }
-            }
-        }
-
-        public bool IsMusicPlay
-        {
-            get => _isMusicPlay;
-            set => Set(ref _isMusicPlay, value);
-        }
-
-
-        public string Behavior
-        {
-            get => _behavior;
-            set => Set(ref _behavior, value);
-        }
-
-        #endregion
         public DelegateCommand AddTrackCommand => _addTrackCommand ??= new DelegateCommand(OnAddTrackCommandExecuted);
 
         public AsyncRelayCommand RemoveTrackRelayCommand =>
@@ -102,15 +61,6 @@ namespace CourseProject.UI.ViewModel
                 _reloadTracksRelayCommand ??= new AsyncRelayCommand(ReloadTracksAsync);
 
         public DelegateCommand GenreNameFilt => _genreNameFiltCommand ??= new DelegateCommand(OnGenreNameFilt);
-
-        private async void OnGenreNameFilt()
-        {
-            var dbSales = await _trackService.NameFilt(SelectedTrack.Entity.Genre.GenreName);
-            Tracks.Clear();
-
-            foreach (var sale in dbSales)
-                Tracks.Add(new TrackEntity(sale));
-        }
 
         public ObservableCollection<TrackEntity> Tracks
         {
@@ -140,6 +90,15 @@ namespace CourseProject.UI.ViewModel
         {
             get => _selectedTrack;
             set => Set(ref _selectedTrack, value);
+        }
+
+        private async void OnGenreNameFilt()
+        {
+            var dbSales = await _trackService.NameFilt(SelectedTrack.Entity.Genre.GenreName);
+            Tracks.Clear();
+
+            foreach (var sale in dbSales)
+                Tracks.Add(new TrackEntity(sale));
         }
 
         private bool CanManipulateOnTrack() => SelectedTrack is not null;
@@ -190,5 +149,43 @@ namespace CourseProject.UI.ViewModel
             foreach (var sale in dbSales)
                 Tracks.Add(new TrackEntity(sale));
         }
+
+        #region Music
+
+        public DelegateCommand PlayOrOffMusic => _playOrOffMusic ??= new DelegateCommand(OnPlayOrOffMusic);
+
+        private void OnPlayOrOffMusic()
+        {
+            if (IsMusicPlay)
+            {
+                IsMusicPlay = false;
+                Behavior = "Pause";
+            }
+            else
+            {
+                if (SelectedTrack != null)
+                {
+                    if (SelectedTrack.Entity.Path != "")
+                    {
+                        IsMusicPlay = true;
+                        Behavior = "Play";
+                    }
+                }
+            }
+        }
+
+        public bool IsMusicPlay
+        {
+            get => _isMusicPlay;
+            set => Set(ref _isMusicPlay, value);
+        }
+
+        public string Behavior
+        {
+            get => _behavior;
+            set => Set(ref _behavior, value);
+        }
+
+        #endregion
     }
 }

@@ -12,9 +12,7 @@ namespace CourseProject.Database
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
                 : base(options) { }
 
-        public ApplicationContext()
-        {
-        }
+        public ApplicationContext() { }
 
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Genre> Genres { get; set; }

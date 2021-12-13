@@ -14,6 +14,6 @@ namespace CourseProject.Shared.IEntityService
 
         public Task<bool> AddAsync(Track entity, string artist, string genre);
 
-        public Task<IEnumerable<Track>> NameFilt(string name) ;
+        public Task<IEnumerable<Track>> NameFilt(string name);
     }
 }
